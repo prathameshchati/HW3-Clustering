@@ -21,6 +21,12 @@ class KMeans:
                 the maximum number of iterations before quitting model fit
         """
 
+        self.k=k
+        self.tol=tol
+        self.max_iter=max_iter
+
+
+
     def fit(self, mat: np.ndarray):
         """
         Fits the kmeans algorithm onto a provided 2D matrix.
@@ -36,6 +42,39 @@ class KMeans:
             mat: np.ndarray
                 A 2D matrix where the rows are observations and columns are features
         """
+
+        # initialize matrix
+        self.mat=mat
+
+        # initialize centroids as random points chosen from the existing data (random choices without replacement)
+        self.centroids=self.mat[np.random.choice(self.mat.shape[0], self.k, replace=False),:]
+
+        # initialize storage for old centroids and iterations
+        itr=0
+        old_centroids=[]
+
+        while itr<self.max_iter: # POTENTIALLY CHANGE TO <= TO HANDLE IF MAX_ITER=0 ################################
+
+            # compute distance matrix
+            cdist_mat=cdist(self.mat, self.centroids)
+            predicted_labels=np.argmin(cdist_mat, axis=1)
+            old_centroids=self.centroids
+
+            updated_centroids=[]
+            for c in set(predicted_labels):
+                mat_cluster=self.mat[np.where(predicted_labels==c)]
+                updated_centroids.append(np.mean(mat_cluster, axis=0))
+            self.centroids=updated_centroids
+
+            # check if the difference between the old and new centroids is small enough (if it reaches the tolerance level); if it is, stop the fitting loop
+            error=np.mean(np.subtract(self.centroids, old_centroids)/old_centroids*100)
+            if error<=self.tol:
+                break
+            
+            itr+=1
+        
+        self.cluster_labels=predicted_labels
+
 
     def predict(self, mat: np.ndarray) -> np.ndarray:
         """
@@ -53,6 +92,7 @@ class KMeans:
             np.ndarray
                 a 1D array with the cluster label for each of the observations in `mat`
         """
+        pass
 
     def get_error(self) -> float:
         """
@@ -63,6 +103,7 @@ class KMeans:
             float
                 the squared-mean error of the fit model
         """
+        pass
 
     def get_centroids(self) -> np.ndarray:
         """
@@ -72,3 +113,4 @@ class KMeans:
             np.ndarray
                 a `k x m` 2D matrix representing the cluster centroids of the fit model
         """
+        pass
