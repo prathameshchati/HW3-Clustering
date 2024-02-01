@@ -14,7 +14,8 @@ def test_kmeans():
 
 
     # create sample data
-    mat, observed_labels = make_clusters(k=3)
+    mat, observed_labels = make_clusters(n=100, m=2, k=3, scale=0.3) # set scale to get tight clusters
+    # mat, observed_labels=make_blobs(n_samples=100, centers=3)
 
     # see if kmeans exits on iteration if tolerance is None (the number of iterations that it takes is stored)
     kmeans=KMeans(k=3, tol=None, max_iter=20)
