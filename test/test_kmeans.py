@@ -19,7 +19,7 @@ def test_kmeans():
     # see if kmeans exits on iteration if tolerance is None (the number of iterations that it takes is stored)
     kmeans=KMeans(k=3, tol=None, max_iter=20)
     kmeans.fit(mat)
-    assert kmeans.itr==15
+    assert kmeans.itr==20
 
     # for checking clustering, using the observed labels, our kmeans algorithm should cluster the same number of points as the observed labels
     # we can check that our two sets of labels have the same counts for each label without the actual label names
