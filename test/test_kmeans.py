@@ -29,6 +29,12 @@ def test_kmeans():
     assert set(predicted_labels_freq.values())==set(observed_labels_freq.values()) # this is label agnostic, it just checks whether the same number of items are in each cluster
     assert len(kmeans.centroids)==3 # checks if we have three resulting centroids
 
+    # test that the tolerance function is working - the number of iteratios should be less than the max
+    kmeans=KMeans(k=3, tol=0.00001, max_iter=20)
+    kmeans.fit(mat)
+    assert kmeans.itr<20
+
+
 def test_edge_cases():
     # test where k is 0 or 1
     with pytest.raises(ValueError) as kmeans:
