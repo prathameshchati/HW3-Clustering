@@ -26,7 +26,7 @@ def test_kmeans():
     # we can check that our two sets of labels have the same counts for each label without the actual label names
     predicted_labels_freq=dict(Counter(kmeans.cluster_labels))
     observed_labels_freq=dict(Counter(observed_labels))
-    assert set(predicted_labels_freq.values())==set(observed_labels_freq.values()) # this is label agnostic, it just checks whether the same number of items are in each cluster
+    assert np.sort(predicted_labels_freq.values())==np.sort(observed_labels_freq.values()) # this is label agnostic, it just checks whether the same number of items are in each cluster
     assert len(kmeans.centroids)==3 # checks if we have three resulting centroids
 
     # test that the tolerance function is working - the number of iteratios should be less than the max
@@ -39,6 +39,20 @@ def test_kmeans():
     kmeans=KMeans(k=99, tol=0.00001, max_iter=20)
     kmeans.fit(mat)
     assert len(kmeans.centroids)==99 # checks if we have three resulting centroids - can't check the way it clustered because that could be a bit random. 
+
+    # check that it works on a high dimensional dataset
+    mat, observed_labels=make_clusters(n=1000, m=30, k=10, scale=0.3)
+    kmeans=KMeans(k=10, tol=0.00001, max_iter=25)
+    kmeans.fit(mat)
+    predicted_labels_freq=dict(Counter(kmeans.cluster_labels))
+    observed_labels_freq=dict(Counter(observed_labels))
+    assert np.sort(predicted_labels_freq.values())==np.sort(observed_labels_freq.values()) # this is label agnostic, it just checks whether the same number of items are in each cluster
+    assert len(kmeans.centroids)==10 # checks if we have three resulting centroids
+
+
+
+
+
 
 def test_edge_cases():
     # test where k is 0 or 1
