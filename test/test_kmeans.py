@@ -14,7 +14,7 @@ def test_kmeans():
 
 
     # create sample data
-    mat, observed_labels = make_clusters(n=100, m=2, k=3, scale=0.3) # set scale to get tight clusters
+    mat, observed_labels=make_clusters(n=100, m=2, k=3, scale=0.3) # set scale to get tight clusters
     # mat, observed_labels=make_blobs(n_samples=100, centers=3)
 
     # see if kmeans exits on iteration if tolerance is None (the number of iterations that it takes is stored)
@@ -34,6 +34,14 @@ def test_kmeans():
     kmeans.fit(mat)
     assert kmeans.itr<20
 
+    # check that it can handle large numbers of clusters
+    mat, observed_labels=make_clusters(n=100, m=2, k=99, scale=0.3) # set scale to get tight clusters
+    kmeans=KMeans(k=99, tol=0.00001, max_iter=20)
+    kmeans.fit(mat)
+    predicted_labels_freq=dict(Counter(kmeans.cluster_labels))
+    observed_labels_freq=dict(Counter(observed_labels))
+    assert set(predicted_labels_freq.values())==set(observed_labels_freq.values()) # this is label agnostic, it just checks whether the same number of items are in each cluster
+    assert len(kmeans.centroids)==99 # checks if we have three resulting centroids
 
 def test_edge_cases():
     # test where k is 0 or 1

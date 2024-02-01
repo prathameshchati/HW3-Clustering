@@ -82,12 +82,12 @@ scores = silhouette.score(labels)
   [x] complete the `score` method  
 
 [ TODO ] Unit Testing  
-  [ ] KMeans Class  
-  [ ] Silhouette Class -- make sure to test against sklearn
+  [x] KMeans Class  
+  [x] Silhouette Class -- make sure to test against sklearn
 
 [ TODO ] Packaging  
-  [ ] pip installable module  
-  [ ] github actions (install + pytest)  
+  [x] pip installable module  
+  [x] github actions (install + pytest)  
 
 For those who are particularly interested: try to implement the [k-means++](https://en.wikipedia.org/wiki/K-means%2B%2B) initialization algorithm. This is a method used in sklearn to initialize the clusters to best guesses and dramatically increases the speed of convergence for the algorithm.
 
