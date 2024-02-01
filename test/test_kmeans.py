@@ -16,6 +16,17 @@ def test_edge_cases():
     with pytest.raises(ValueError) as kmeans:
         KMeans(k=1)
     assert kmeans.type==ValueError
+
+    # raise error when k is greater than the given data
+    mat, observed_labels=make_blobs(n_samples=100, centers=k)
+    kmeans=KMeans(k=200)
+
+    with pytest.raises(ValueError) as kmeans_fit:
+            kmeans.fit(mat)
+    assert kmeans_fit.type==ValueError
+
+
+    
     
 
 
