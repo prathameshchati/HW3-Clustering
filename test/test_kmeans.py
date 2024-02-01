@@ -17,7 +17,7 @@ def test_kmeans():
     mat, observed_labels = make_clusters(k=3)
 
     # see if kmeans exits on iteration if tolerance is None (the number of iterations that it takes is stored)
-    kmeans=KMeans(k=3, tol=None, max_iter=15)
+    kmeans=KMeans(k=3, tol=None, max_iter=20)
     kmeans.fit(mat)
     assert kmeans.itr==15
 
