@@ -25,7 +25,8 @@ def test_silhouette_score():
     predicted_labels=kmeans.cluster_labels
 
     # get our silhouette score
-    silhouette_scores=Silhouette.score(mat, predicted_labels)
+    silhouette=Silhouette()
+    silhouette_scores=silhouette.score(mat, predicted_labels)
     mean_ss=np.mean(silhouette_scores)
 
     # get sklearns silhouette scores

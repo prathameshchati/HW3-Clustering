@@ -63,6 +63,8 @@ class Silhouette:
             ss=(avg_next_cluster_distance-avg_inter_cluster_distance)/max(avg_next_cluster_distance, avg_inter_cluster_distance)
             silhouette_scores.append(ss)
 
-        return silhouette_scores
+            self.silhouette_scores=silhouette_scores
+
+        return self.silhouette_scores
 
 
