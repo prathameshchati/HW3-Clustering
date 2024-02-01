@@ -42,7 +42,7 @@ def test_kmeans():
 
     # check that it works on a high dimensional dataset
     mat, observed_labels=make_clusters(n=1000, m=30, k=10, scale=0.3)
-    kmeans=KMeans(k=5, tol=0.0000001, max_iter=100)
+    kmeans=KMeans(k=10, tol=0.0000001, max_iter=100)
     kmeans.fit(mat)
     assert len(kmeans.centroids)==10 # checks if we have three resulting centroids
 
