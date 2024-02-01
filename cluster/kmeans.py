@@ -76,11 +76,12 @@ class KMeans:
 
             # check if the difference between the old and new centroids is small enough (if it reaches the tolerance level); if it is, stop the fitting loop
             error=np.mean(np.subtract(self.centroids, old_centroids)/old_centroids*100)
-            if error<=self.tol:
+            if (self.tol!=None and error<=self.tol):
                 break
             
             itr+=1
         
+        self.itr=itr
         self.cluster_labels=predicted_labels
 
 
