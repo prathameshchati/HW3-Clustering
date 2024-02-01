@@ -37,6 +37,13 @@ def test_silhouette_score():
     assert ss_error<=0.005 # very low error rate
 
     # check that the silhouette score per sample is also below a certain error threshold
+    sklearn_ss_list=silhouette_samples(mat, predicted_labels)
+    ss_error_list=[]
+    for p,o in zip(silhouette_scores, sklearn_ss_list):
+        e=((p-o)/p)*100
+        ss_error_list.append(e)
+    assert np.mean(ss_error_list)<=0.05
+
 
 
 
