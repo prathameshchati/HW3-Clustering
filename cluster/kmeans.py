@@ -25,6 +25,10 @@ class KMeans:
         self.tol=tol
         self.max_iter=max_iter
 
+        # check if k is trivial, 0 or 1
+        if (self.k==0 or self.k==1):
+            raise ValueError("The value of k must be greater than 1, please choose another value for k.")
+        
 
 
     def fit(self, mat: np.ndarray):
@@ -45,6 +49,10 @@ class KMeans:
 
         # initialize matrix
         self.mat=mat
+
+        # if k is equal to or greater than the number of observations, raise an error
+        if (self.k>=self.mat.shape[0]):
+            raise ValueError("The value for k cannot be equal to the number of observations. Use a larger dataset or reduce the value of k.")
 
         # initialize centroids as random points chosen from the existing data (random choices without replacement)
         self.centroids=self.mat[np.random.choice(self.mat.shape[0], self.k, replace=False),:]
@@ -92,7 +100,17 @@ class KMeans:
             np.ndarray
                 a 1D array with the cluster label for each of the observations in `mat`
         """
-        pass
+        # in order to prevent overwriting of the mat object from predict, label new mat object as _mat
+        self._mat=mat
+
+        # compute distance matrix and predict labels based on closest distance
+        cdist_mat=cdist(self._mat, self.centroids)
+        predicted_labels=np.argmin(cdist_mat, axis=1)
+
+        # return the predicted labels
+        return predicted_labels
+
+        # pass
 
     def get_error(self) -> float:
         """
@@ -103,7 +121,16 @@ class KMeans:
             float
                 the squared-mean error of the fit model
         """
-        pass
+        sse=0
+        for c in set(self.cluster_labels):
+            mat_cluster=self.mat[np.where(self.cluster_labels==c)]
+            se=np.sum((mat_cluster-[self.centroids[c]])**2)
+            sse+=se
+        mse=sse/len(self.mat)
+
+        return sse
+
+        # pass
 
     def get_centroids(self) -> np.ndarray:
         """
@@ -113,4 +140,8 @@ class KMeans:
             np.ndarray
                 a `k x m` 2D matrix representing the cluster centroids of the fit model
         """
-        pass
+
+        # return the centroids that were stored
+        return self.centroids
+
+        # pass

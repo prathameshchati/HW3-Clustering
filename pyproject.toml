@@ -11,7 +11,7 @@ pythonpath = [
 ]
 
 [project]
-name = "clustering"
+name = "cluster"
 authors = [{name = "Prathamesh Chati", email = "prathamesh.chati@ucsf.edu"}]
 readme = "README.md"
 license = {file = "LICENSE"}
@@ -19,6 +19,7 @@ classifiers = ["License :: OSI Approved :: MIT License"]
 dynamic = ["version", "description"]
 dependencies = [
     "pytest",
+    "numpy"
 ]
 
 [project.urls]
