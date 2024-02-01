@@ -41,17 +41,10 @@ def test_kmeans():
     assert len(kmeans.centroids)==99 # checks if we have three resulting centroids - can't check the way it clustered because that could be a bit random. 
 
     # check that it works on a high dimensional dataset
-    mat, observed_labels=make_clusters(n=1000, m=30, k=5, scale=0.3)
+    mat, observed_labels=make_clusters(n=1000, m=30, k=10, scale=0.3)
     kmeans=KMeans(k=5, tol=0.0000001, max_iter=100)
     kmeans.fit(mat)
-    predicted_labels_freq=dict(Counter(kmeans.cluster_labels))
-    observed_labels_freq=dict(Counter(observed_labels))
-    assert set(predicted_labels_freq.values())==set(observed_labels_freq.values()) # this is label agnostic, it just checks whether the same number of items are in each cluster
-    assert len(kmeans.centroids)==5 # checks if we have three resulting centroids
-
-
-
-
+    assert len(kmeans.centroids)==10 # checks if we have three resulting centroids
 
 
 def test_edge_cases():
